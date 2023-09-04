@@ -1,15 +1,28 @@
 import fs from 'fs';
 import sharp from 'sharp';
+import path from 'path';
+import { checkFileExist } from './findFile';
+import { imagePath } from '../index.common';
 
-const resize = (path: string, width?: number, height?: number) => {
-  const readStream = fs.createReadStream(path);
-  let transform = sharp();
+const resize = async (fileName: string, width: number, height: number) => {
+  const filePath_Full = path.resolve(`${imagePath}/full/${fileName}.jpg`);
 
-  if (width || height) {
-    transform = transform.resize(width, height);
+  const thumbFile = path.resolve(
+    `${imagePath}/thumb/${fileName}-${width}-${height}.jpg`,
+  );
+  const isImageExisted = checkFileExist(thumbFile);
+
+  if (!isImageExisted) {
+    const filePath_Thumb = path.resolve(
+      `${imagePath}/thumb/${fileName}-${width}-${height}.jpg`,
+    );
+    await sharp(filePath_Full).resize(width, height).toFile(filePath_Thumb);
+    const readStream = fs.createReadStream(filePath_Thumb);
+
+    return readStream.path as string;
+  } else {
+    return thumbFile;
   }
-
-  return readStream.pipe(transform);
 };
 
 export default resize;

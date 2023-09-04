@@ -7,10 +7,10 @@ const express_1 = __importDefault(require("express"));
 const image_1 = __importDefault(require("./routes/image"));
 const app = (0, express_1.default)();
 const port = 3000;
-app.get('/api', (req, res) => {
+app.get('/', (req, res) => {
     res.send('Server start');
 });
-app.use('/api/image', image_1.default);
+app.use('/image', image_1.default);
 app.listen(port, () => {
     console.log(`server is running on localhost:${port}`);
 });
