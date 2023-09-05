@@ -29,10 +29,14 @@ describe('Utilities test', () => {
 describe('Endpoint response test', () => {
     it('3. should get the / endpoint when user not enter path but the code still run', () => __awaiter(void 0, void 0, void 0, function* () {
         const response = yield request.get('/');
-        expect(response.statusCode).toBe(200);
+        expect(response.statusCode).toEqual(200);
     }));
     it('4. should get the /api endpoint when user not enter path but the code still run', () => __awaiter(void 0, void 0, void 0, function* () {
         const response = yield request.get('/api');
-        expect(response.statusCode).toBe(200);
+        expect(response.statusCode).toEqual(200);
+    }));
+    it('4. should get error /api/image endpoint when user not enter filename', () => __awaiter(void 0, void 0, void 0, function* () {
+        const response = yield request.get('/api/image');
+        expect(response.statusCode).not.toEqual(200);
     }));
 });
