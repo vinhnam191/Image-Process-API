@@ -16,12 +16,12 @@ image.get('/', async (req: Request, res: Response, next: Function) => {
 
   if (!fileName || !isFileFullExisted) {
     next('Please intput the fileName or fileName is not existed');
-  } else if (isNaN(Number(width)) || isNaN(Number(height))) {
+  } else if (isNaN(+width) || isNaN(+height)) {
     // check if user input inccorect type
     next('Please input width or height of the image as a number');
-  } else if (Number(width) <= 0 || Number(height) <= 0) {
+  } else if (+width <= 0 || +height <= 0) {
     next('Please input a positive number for width or height');
-  } else if (fileName && !isNaN(Number(width)) && !isNaN(Number(height))) {
+  } else if (fileName && !isNaN(+width) && !isNaN(+height)) {
     const image = await resize(fileName, width, height);
 
     res.sendFile(image);
