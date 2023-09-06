@@ -4,7 +4,11 @@ import path from 'path';
 import { checkFileExist } from './findFile';
 import { imagePath } from '../index.common';
 
-const resize = async (fileName: string, width: number, height: number) => {
+const resize = async (
+  fileName: string,
+  width: number,
+  height: number,
+): Promise<string> => {
   const filePath_Full = path.resolve(`${imagePath}/full/${fileName}.jpg`);
 
   const thumbFile = path.resolve(

@@ -9,5 +9,5 @@ const api = express_1.default.Router();
 api.get('/', (req, res) => {
     res.send('Welcome to Image Processing API. Please add /image?filename=""&width=""&height="" to path of url to resize an image ');
 });
-api.use('/image', image_1.default);
+api.use('/images', image_1.default);
 exports.default = api;

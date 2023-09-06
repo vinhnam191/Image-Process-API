@@ -1,6 +1,8 @@
 import { checkFileExist } from '../utilities/findFile';
 import app from '..';
 import supertest from 'supertest';
+import path from 'path';
+import resize from '../utilities/resize';
 
 const request = supertest(app);
 
@@ -28,8 +30,22 @@ describe('Endpoint response test', () => {
     expect(response.statusCode).toEqual(200);
   });
 
-  it('5. should get error /api/image endpoint when user not enter filename', async () => {
+  it('5. should get the /api/images endpoint when user not enter path but the code still run', async () => {
+    const response = await request.get('/api/images');
+    expect(response.statusCode).toEqual(200);
+  });
+
+  it('6. should get error /api/image endpoint when user not enter filename', async () => {
     const response = await request.get('/api/image');
     expect(response.statusCode).not.toEqual(200);
+  });
+});
+
+describe('Image Processing Test', () => {
+  it('7. Resize function should return thumb file if the image is existed ', async () => {
+    const filePath_Thumb = path.resolve(
+      `src/images/thumb/hello-world-200-200.jpg`,
+    );
+    expect(await resize('hello-world', 200, 200)).toEqual(filePath_Thumb);
   });
 });
